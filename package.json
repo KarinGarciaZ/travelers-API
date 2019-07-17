@@ -15,5 +15,19 @@
   "bugs": {
     "url": "https://github.com/KarinGarciaZ/travelers-API/issues"
   },
-  "homepage": "https://github.com/KarinGarciaZ/travelers-API#readme"
+  "homepage": "https://github.com/KarinGarciaZ/travelers-API#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "mysql2": "^1.6.5",
+    "sequelize": "^5.10.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.5.4",
+    "@babel/preset-env": "^7.5.4",
+    "@babel/register": "^7.4.4",
+    "nodemon": "^1.19.1"
+  }
 }
