@@ -4,11 +4,19 @@ const router = express.Router()
 
 router
 
-.get('/', (req, res, next) => {
+.get('/', (req, res) => {
   range.getAll(res)
 })
 
-.post('/', (req, res, next) => {
+.get('/:id/withCities', (req, resp) => {
+  range.getOneWithCities(req.params.id, resp)
+})
+
+.get('/:id', (req, resp) => {
+  range.getOne(req.params.id, resp)
+})
+
+.post('/', (req, res) => {
   const newRange = {
     name: req.body.name,
     medal: req.body.medal,
