@@ -52,7 +52,7 @@ const User = sequelize.define('users', {
   }, 
   username: {
     type: Sequelize.STRING,
-    unique: false
+    unique: true
   }, 
   password: Sequelize.STRING,
   statusItem: Sequelize.INTEGER
@@ -102,16 +102,18 @@ User.hasMany(Comment)
 User.hasMany(Follow)
 User.hasOne(UserInfo)
 
-UserInfo.belongsTo(User)
+UserInfo.belongsTo(User, {
+  foreignKey: {unique: true}
+})
 
 Follow.belongsTo(User)
 
 
 /*--GENERETE TABLES AND RELATIONS IF THESE DOESN'T EXIST--*/
 
-sequelize.sync(/*{force: true}*/)
+sequelize.sync({force: true})
 .then( () => console.log('DATABASE READY TO WORK'))
 .catch( error => console.log('ERROR CONNECTING TO THE DATABASE: --->', error))
 
 
-module.exports = { City, Range, Country }
+module.exports = { City, Range, Country, Album, Image, Like, Comment, User, UserInfo, Follow }
