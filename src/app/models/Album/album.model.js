@@ -60,8 +60,10 @@ albumFunctions.getOne = (id, res) => {
           model: City
         },
         { 
+          model: User
+        },
+        { 
           model: Image,
-          required: false,
           where: { statusItem: 0 },
         },
         { 
@@ -79,6 +81,14 @@ albumFunctions.getOne = (id, res) => {
   })
   .then(resp => responseMW(null, res, resp, 200 ))
   .catch(err => responseMW(err, res))  
+}
+
+albumFunctions.getCountImages = id => {
+  sequelizeConnection.transaction( t => {
+    return Image.count({ where: { statusItem: 0, albumId: id } })
+  })
+  .then(data => data)
+  .catch(err => err)    
 }
 
 albumFunctions.saveOne = ( album, res ) => {
