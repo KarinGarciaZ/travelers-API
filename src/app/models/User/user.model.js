@@ -9,7 +9,7 @@ userFunctions.getOne = (id, res) => {
   sequelizeConnection.transaction( t => {
     return User.findOne({ 
       where: { id, statusItem: 0 },
-      include: [{ model: UserInfo }]
+      include: [{ model: UserInfo, required: false }]
      })
   })
   .then(resp => responseMW(null, res, resp, 200 ))

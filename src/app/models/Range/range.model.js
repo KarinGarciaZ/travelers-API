@@ -28,6 +28,7 @@ rangeFunctions.getOneWithCities = (id, res) => {
       include: [
         {
           model: City,
+          required: false,
           where: { statusItem: 0 }
         }
       ]
