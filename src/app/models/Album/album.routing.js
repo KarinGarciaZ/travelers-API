@@ -12,7 +12,7 @@ router
   album.getOne(req.params.id, res)
 })
 
-router.post('/', (req, res) => {
+.post('/', (req, res) => {
   const newAlbum = {
     imagesNumber: req.body.imagesNumber,
     userId: req.body.userId,

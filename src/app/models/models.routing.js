@@ -7,6 +7,7 @@ const Country = require('./Country/country.routing')
 const User = require('./User/user.routing')
 const Album = require('./Album/album.routing')
 const Image = require('./Image/image.routing')
+const Follow = require('./Follow/follow.routing')
 
 router.use('/city', City)
 router.use('/range', Range)
@@ -14,5 +15,6 @@ router.use('/country', Country)
 router.use('/user', User)
 router.use('/album', Album)
 router.use('/image', Image)
+router.use('/follow', Follow)
 
 module.exports = router;
