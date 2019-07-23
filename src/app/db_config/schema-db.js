@@ -25,7 +25,6 @@ const Range = sequelize.define('ranges', {
 })
 
 const Album = sequelize.define('albums', {
-  imagesNumber: Sequelize.INTEGER,
   description: Sequelize.STRING,
   statusItem: Sequelize.INTEGER
 })

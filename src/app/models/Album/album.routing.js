@@ -17,6 +17,7 @@ router
     imagesNumber: req.body.imagesNumber,
     userId: req.body.userId,
     cityId: req.body.cityId,
+    description: req.body.description,
     statusItem: 0,
   }
   album.saveOne(newAlbum, res)
