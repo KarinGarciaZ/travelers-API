@@ -62,7 +62,8 @@ const UserInfo = sequelize.define('userinfo', {
   biography: Sequelize.STRING,
   phone: Sequelize.STRING,
   gender: Sequelize.STRING,
-  website: Sequelize.STRING
+  website: Sequelize.STRING,
+  profilePictureUrl: Sequelize.STRING
 })
 
 const Follow = sequelize.define('follows', {
