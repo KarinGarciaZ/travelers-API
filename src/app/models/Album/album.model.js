@@ -91,12 +91,32 @@ albumFunctions.getCountImages = id => {
   .catch(err => err)    
 }
 
-albumFunctions.saveOne = ( album, res ) => {
-  sequelizeConnection.transaction( t => {
-    return Album.create(album)
+albumFunctions.validateIfAlbumExists = (userId, cityId) => {
+  return sequelizeConnection.transaction( t => {
+    return Album.findOne({where: {
+      statusItem: 0,
+      cityId,
+      userId
+    }})
   })
-  .then(data => responseMW(null, res, data, 201))
-  .catch(err => responseMW(err, res))    
+  .then(data => data)
+  .catch(err => err)   
+}
+
+albumFunctions.saveOne = ( album, res ) => {
+  albumFunctions.validateIfAlbumExists(album.userId, album.cityId)
+  .then( resp => {
+    if(resp)
+      responseMW('album exists.', res)
+    else {
+      sequelizeConnection.transaction( t => {
+        return Album.create(album)
+      })
+      .then(data => responseMW(null, res, data, 201))
+      .catch(err => responseMW(err, res))  
+    }    
+  })
+  .catch(err => responseMW(err, res))  
 }
 
 module.exports = albumFunctions

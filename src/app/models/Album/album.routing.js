@@ -14,7 +14,6 @@ router
 
 .post('/', (req, res) => {
   const newAlbum = {
-    imagesNumber: req.body.imagesNumber,
     userId: req.body.userId,
     cityId: req.body.cityId,
     description: req.body.description,
