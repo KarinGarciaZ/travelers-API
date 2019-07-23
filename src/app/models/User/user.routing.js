@@ -26,6 +26,7 @@ router.post('/userInfo', (req, res) => {
     phone: req.body.phone,
     gender: req.body.gender,
     website: req.body.website,
+    profilePictureUrl: req.body.profilePictureUrl,
     userId: req.body.userId
   }
   user.saveInfo(userInfo, res)
