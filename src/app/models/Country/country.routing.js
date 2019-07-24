@@ -20,4 +20,17 @@ router.post( '/', (req, res) => {
   country.saveOne(newCountry, res)
 })
 
+.put('/', (req, res) => {
+  const countryUpdated = {
+    name: req.body.name,
+    latitude: req.body.latitude,
+    longitude: req.body.longitude,
+    rangeId: req.body.rangeId
+  }
+
+  let id = req.body.id
+
+  country.update( id, countryUpdated, res )
+})
+
 module.exports = router

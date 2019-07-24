@@ -46,4 +46,12 @@ rangeFunctions.saveOne = ( range, res ) => {
   .catch(err => responseMW(err, res))    
 }
 
+rangeFunctions.update = ( id, range, res ) => {
+  sequelizeConnection.transaction( t => {
+    return Range.update(range, { where: { id } })
+  })
+  .then(data => responseMW(null, res, data, 201))
+  .catch(err => responseMW(err, res))    
+}
+
 module.exports = rangeFunctions

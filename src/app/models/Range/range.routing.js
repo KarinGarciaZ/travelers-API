@@ -26,4 +26,15 @@ router
   range.saveOne( newRange, res )
 })
 
+.put('/', (req, res) => {
+  const rangeUpdated = {
+    name: req.body.name,
+    medal: req.body.medal
+  }
+
+  let id = req.body.id
+
+  range.update( id, rangeUpdated, res )
+})
+
 module.exports = router

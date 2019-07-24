@@ -8,7 +8,7 @@ router
   user.getOne(req.params.id, res)
 })
 
-router.post('/', (req, res) => {
+.post('/', (req, res) => {
   const newUser = {
     name: req.body.name,
     email: req.body.email,
@@ -20,7 +20,7 @@ router.post('/', (req, res) => {
   user.saveOne(newUser, res)
 })
 
-router.post('/userInfo', (req, res) => {
+.post('/userInfo', (req, res) => {
   const userInfo = {
     biography: req.body.biography,
     phone: req.body.phone,
@@ -30,6 +30,36 @@ router.post('/userInfo', (req, res) => {
     userId: req.body.userId
   }
   user.saveInfo(userInfo, res)
+})
+
+.put('/', (req, res) => {
+  const updatedUser = {
+    name: req.body.name,
+    username: req.body.username
+  }
+
+  let id = req.body.id
+
+  user.update(id, updatedUser, res)
+})
+
+.put('/userInfo', (req, res) => {
+  const userInfo = {
+    biography: req.body.biography,
+    phone: req.body.phone,
+    gender: req.body.gender,
+    website: req.body.website,
+    profilePictureUrl: req.body.profilePictureUrl
+  }
+  let id = req.body.userId
+
+  user.updateInfo(id, userInfo, res)
+})
+
+.delete('/:id', (req, res) => {
+  let id = req.params.id
+
+  user.delete(id, res)
 })
 
 module.exports = router

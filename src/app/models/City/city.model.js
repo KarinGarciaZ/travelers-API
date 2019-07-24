@@ -32,4 +32,12 @@ cityFunctions.saveOne = ( city, res ) => {
   .catch(err => responseMW(err, res))    
 }
 
+cityFunctions.update = ( id, city, res ) => {
+  sequelizeConnection.transaction( t => {
+    return City.update(city, {where: {id, statusItem: 0}})
+  })
+  .then(data => responseMW(null, res, data, 201))
+  .catch(err => responseMW(err, res))    
+}
+
 module.exports = cityFunctions

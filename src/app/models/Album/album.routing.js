@@ -22,4 +22,24 @@ router
   album.saveOne(newAlbum, res)
 })
 
+.put('/', (req, res) => {
+  const updatedAlbum = {
+    description: req.body.description,
+  }
+
+  let id = req.body.id
+
+  album.update(id, updatedAlbum, res)
+})
+
+.delete('/:id', (req, res) => {
+  const updatedAlbum = {
+    statusItem: 1,
+  }
+
+  let id = req.params.id
+
+  album.update(id, updatedAlbum, res)
+})
+
 module.exports = router

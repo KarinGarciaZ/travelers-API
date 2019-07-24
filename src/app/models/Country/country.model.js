@@ -20,4 +20,12 @@ countryFunctions.saveOne = ( country, res ) => {
   .catch(err => responseMW(err, res))    
 }
 
+countryFunctions.update = ( id, country, res ) => {
+  sequelizeConnection.transaction( t => {
+    return Country.update(country, { where: { id } })
+  })
+  .then(data => responseMW(null, res, data, 201))
+  .catch(err => responseMW(err, res))    
+}
+
 module.exports = countryFunctions

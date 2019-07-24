@@ -1,3 +1,5 @@
+const Sequelize = require('sequelize')
+
 const Album = require('../../db_config/schema-db').Album
 const Image = require('../../db_config/schema-db').Image
 const User = require('../../db_config/schema-db').User
@@ -15,30 +17,37 @@ albumFunctions.getAllPerUser = (id, res) => {
   sequelizeConnection.transaction( t => {
     return User.findOne({ 
       where: { id, statusItem: 0 },
+      attributes: ['id', 'name', 'email', 'username'],      
+      order: [ [Album, 'id', 'desc'] ],
       include: [
         { 
           model: UserInfo, 
+          attributes: ['profilePictureUrl', 'biography', 'website'],
           required: false 
         },        
         {
           model: Album,
+          attributes: ['id', 'description', 'updatedAt'],
           required: false,
           include: [
             { 
-              model: City
+              model: City,
+              attributes: ['id', 'name', 'rangeId'],
             },
             { 
               model: Image,
-              required: false,
+              attributes: ['url'],
               where: { statusItem: 0 },
             },
             { 
               model: Like,
+              attributes: ['id'],
               required: false,
               where: { statusItem: 0 },
             },
             { 
               model: Comment,
+              attributes: ['id'],
               required: false,
               where: { statusItem: 0 },
             },
@@ -55,24 +64,36 @@ albumFunctions.getOne = (id, res) => {
   sequelizeConnection.transaction( t => {
     return Album.findOne({ 
       where: { id, statusItem: 0 },
+      attributes: ['id', 'description', 'updatedAt'],
       include: [
         { 
-          model: City
+          model: City,          
+          attributes: ['id', 'name', 'rangeId'],
         },
         { 
-          model: User
+          model: User,
+          attributes: ['id', 'name', 'username'],
+          include: [
+            {
+              model: UserInfo,
+              attributes: ['profilePictureUrl'],
+            }
+          ]
         },
         { 
           model: Image,
+          attributes: ['url'],
           where: { statusItem: 0 },
         },
         { 
-          model: Like,
+          model: Like,          
+          attributes: ['id'],
           required: false,
           where: { statusItem: 0 },
         },
         { 
           model: Comment,
+          attributes: ['id'],
           required: false,
           where: { statusItem: 0 },
         },
@@ -117,6 +138,14 @@ albumFunctions.saveOne = ( album, res ) => {
     }    
   })
   .catch(err => responseMW(err, res))  
+}
+
+albumFunctions.update = ( id, album, res ) => {
+  sequelizeConnection.transaction( t => {
+    return Album.update(album, { where: {id} })
+  })
+  .then(data => responseMW(null, res, data, 201))
+  .catch(err => responseMW(err, res))   
 }
 
 module.exports = albumFunctions
