@@ -22,4 +22,24 @@ router
   comment.saveOne(newComment, res)
 })
 
+.put('/', (req, res) => {
+  const updatedComment = {
+    text: req.body.text
+  }
+
+  let id = req.body.id
+
+  comment.update(id, updatedComment, res)
+})
+
+.delete('/:id', (req, res) => {
+  const updatedComment = {
+    statusItem: 1
+  }
+
+  let id = req.params.id
+
+  comment.update(id, updatedComment, res)
+})
+
 module.exports = router

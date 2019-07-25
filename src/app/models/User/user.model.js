@@ -61,13 +61,11 @@ userFunctions.updateInfo = ( id, userInfo, res ) => {
 userFunctions.delete = ( id, res ) => {
   sequelizeConnection.transaction( t => {
     return Promise.all([
-      User.update({statusItem: 1}, { where: {id} }, {transaction: t}),
-      Comment.update({statusItem: 1}, { where: {userId, id} }, {transaction: t}),
-      Like.update({statusItem: 1}, { where: {userId: id} }, {transaction: t}),
-      Follow.update({statusItem: 1}, 
-        { where: { userId: id, $or: [{idFollowing: id}] } }, 
-        {transaction: t}
-      ),
+      User.update({statusItem: 1}, { where: {id, statusItem: 0} }, {transaction: t}),
+      Comment.update({statusItem: 1}, { where: {userId: id, statusItem: 0} }, {transaction: t}),
+      Like.update({statusItem: 1}, { where: {userId: id, statusItem: 0} }, {transaction: t}),
+      Follow.update({statusItem: 1}, { where: { userId: id, statusItem: 0 } }, {transaction: t}),
+      Follow.update({statusItem: 1}, { where: { idFollowing: id, statusItem: 0 } }, {transaction: t}),
     ])     
   })
   .then(data => responseMW(null, res, data, 201))

@@ -11,13 +11,16 @@ followFunctions.getAllFollowersPerUser = (id, res) => {
   sequelizeConnection.transaction( t => {
     return Follow.findAll({ 
       where: { idFollowing: id, statusItem: 0 },
+      attributes: [], 
       include: [
         { 
           model: User, 
+          attributes: ['id', 'name', 'username'], 
           required: false,
           include: [
             {
               model: UserInfo,
+              attributes: ['profilePictureUrl'], 
               required: false
             }
           ]
@@ -31,10 +34,15 @@ followFunctions.getAllFollowersPerUser = (id, res) => {
 
 followFunctions.getAllFollowingPerUser = (id, res) => {
   sequelizeConnection.transaction( t => {
-    return Follow.findAll({where: { userId: id, statusItem: 0 }}, {transaction: t})
+    return Follow.findAll(
+      {
+        where: { userId: id, statusItem: 0 },
+        attributes: ['idFollowing'], 
+      }, {transaction: t}
+    )
     .then( follows => {
       if( !follows.length )
-        return
+        return []
 
       let arrayUsers = []
       arrayUsers = follows.map( follow => {
@@ -42,9 +50,11 @@ followFunctions.getAllFollowingPerUser = (id, res) => {
         return User.findOne(
           {
             where: { id: follow.idFollowing, statusItem: 0 },
+            attributes: ['id', 'name', 'username'], 
             include: [
               {
                 model: UserInfo,
+                attributes: ['profilePictureUrl'], 
                 required: false
               },  
             ]
@@ -77,12 +87,33 @@ followFunctions.getAllFollowingCountPerUser = (id, res) => {
   .catch(err => responseMW(err, res))  
 }
 
-followFunctions.saveOne = ( follow, res ) => {
-  sequelizeConnection.transaction( t => {
-    return Follow.create(follow)
+followFunctions.validateIfFollowExists = (userId, idFollowing) => {
+  return sequelizeConnection.transaction( t => {
+    return Follow.findOne({where: {
+      idFollowing,
+      userId
+    }})
   })
-  .then(data => responseMW(null, res, data, 201))
-  .catch(err => responseMW(err, res))    
+  .then(data => data)
+  .catch(err => err)   
+}
+
+followFunctions.saveOne = ( follow, res ) => {   
+  followFunctions.validateIfFollowExists(follow.userId, follow.idFollowing)
+  .then( followResp => {
+    sequelizeConnection.transaction( t => {
+      if( !followResp )
+        return Follow.create(follow)
+      
+      if ( followResp.dataValues.statusItem )
+        return Follow.update({statusItem: 0}, {where: {id: followResp.dataValues.id}})
+
+      return Follow.update({statusItem: 1}, {where: {id: followResp.dataValues.id}})
+    })
+    .then(data => responseMW(null, res, data, 201))
+    .catch(err => responseMW(err, res)) 
+  })
+  .catch(err => responseMW(err, res)) 
 }
 
 module.exports = followFunctions
