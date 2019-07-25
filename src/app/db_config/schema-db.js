@@ -12,14 +12,20 @@ const City = sequelize.define('cities', {
 })
 
 const Country = sequelize.define('countries', {
-  name: Sequelize.STRING,
+  name: {
+    type: Sequelize.STRING,
+    unique: true
+  },
   latitude: Sequelize.DECIMAL(9, 6),
   longitude: Sequelize.DECIMAL(9, 6),
   statusItem: Sequelize.INTEGER
 })
 
 const Range = sequelize.define('ranges', {
-  name: Sequelize.STRING,
+  name: {
+    type: Sequelize.STRING,
+    unique: true
+  },
   medal: Sequelize.STRING,
   statusItem: Sequelize.INTEGER
 })
