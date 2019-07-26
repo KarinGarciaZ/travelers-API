@@ -7,6 +7,7 @@ const UserInfo = require('../../db_config/schema-db').UserInfo
 const City = require('../../db_config/schema-db').City
 const Comment = require('../../db_config/schema-db').Comment
 const Like = require('../../db_config/schema-db').Like
+const Range = require('../../db_config/schema-db').Range
 
 const responseMW = require('../../middlewares/response')
 const sequelizeConnection = require('../../db_config/connection')
@@ -32,7 +33,13 @@ albumFunctions.getAllPerUser = (id, res) => {
           include: [
             { 
               model: City,
-              attributes: ['id', 'name', 'rangeId'],
+              attributes: ['id', 'name'],
+              include:[
+                {
+                  model: Range,
+                  attributes: ['id', 'medal']
+                }
+              ]
             },
             { 
               model: Image,
@@ -68,7 +75,13 @@ albumFunctions.getOne = (id, res) => {
       include: [
         { 
           model: City,          
-          attributes: ['id', 'name', 'rangeId'],
+          attributes: ['id', 'name'],
+          include:[
+            {
+              model: Range,
+              attributes: ['id', 'medal']
+            }
+          ]
         },
         { 
           model: User,
