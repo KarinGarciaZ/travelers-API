@@ -31,7 +31,7 @@ for (let index = 0; index < 50; index++) {
     name: faker.Address.ukCounty(),
     latitude: faker.Address.latitude(),
     longitude: faker.Address.longitude(),
-    rangeId: Math.floor(Math.random() * 4) + 1,
+    rangeId: 1,
   }
   data.country.push(country)
 }
@@ -41,13 +41,13 @@ for (let index = 0; index < 1000; index++) {
     name: faker.Address.city(),
     latitude: faker.Address.latitude(),
     longitude: faker.Address.longitude(),
-    rangeId: Math.floor(Math.random() * 4) + 1,
+    rangeId: Math.floor(Math.random() * 3) + 2,
     countryId: Math.floor(Math.random() * 49) + 1,
   }
   data.city.push(city)
 }
 
-for (let index = 0; index < 100; index++) {
+for (let index = 0; index < 50; index++) {
   let user = {
     name: faker.Name.firstName()+' '+faker.Name.lastName(),
     email: faker.Internet.email(),
@@ -57,7 +57,7 @@ for (let index = 0; index < 100; index++) {
   data.user.push(user)
 }
 
-for (let index = 0; index < 100; index++) {
+for (let index = 0; index < 50; index++) {
   let userInfo = {
     biography: faker.Lorem.sentence(),
     phone: faker.PhoneNumber.phoneNumber(),
@@ -69,29 +69,31 @@ for (let index = 0; index < 100; index++) {
   data.userInfo.push(userInfo)
 }
 
-for (let index = 0; index < 300; index++) {
+for (let index = 0; index < 1000; index++) {
   let album = {
     description: faker.Lorem.sentence(),
-    userId: Math.floor(Math.random() * 99) + 1,
+    userId: Math.floor(Math.random() * 49) + 1,
     cityId: Math.floor(Math.random() * 999) + 1,
   }
   data.album.push(album)
 }
 
-for (let index = 0; index < 1000; index++) {
+
+for (let index = 0; index < 4000; index++) {
   let image = {
     url: faker.Image.imageUrl(
       Math.floor(Math.random() * 500) + 500, 
       Math.floor(Math.random() * 500) + 500),
-    albumId: Math.floor(Math.random() * 299) + 1,
+    albumId: Math.floor(Math.random() * 999) + 1,
   }
   data.image.push(image)
 }
 
-for (let index = 0; index < 1000; index++) {
+
+for (let index = 0; index < 10000; index++) {
   let like = {
-    userId: Math.floor(Math.random() * 99) + 1,
-    albumId: Math.floor(Math.random() * 299) + 1,
+    userId: Math.floor(Math.random() * 49) + 1,
+    albumId: Math.floor(Math.random() * 999) + 1,
   }
   data.like.push(like)
 }
@@ -99,16 +101,16 @@ for (let index = 0; index < 1000; index++) {
 for (let index = 0; index < 1000; index++) {
   let comment = {
     text: faker.Lorem.sentence(),
-    userId: Math.floor(Math.random() * 99) + 1,
-    albumId: Math.floor(Math.random() * 299) + 1,
+    userId: Math.floor(Math.random() * 49) + 1,
+    albumId: Math.floor(Math.random() * 999) + 1,
   }
   data.comment.push(comment)
 }
 
 for (let index = 0; index < 1000; index++) {
   let follow = {
-    userId: Math.floor(Math.random() * 99) + 1,
-    idFollowing: Math.floor(Math.random() * 99) + 1,
+    userId: Math.floor(Math.random() * 49) + 1,
+    idFollowing: Math.floor(Math.random() * 49) + 1,
   }
   data.follow.push(follow)
 }
