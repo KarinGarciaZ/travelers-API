@@ -8,17 +8,24 @@ const City = sequelize.define('cities', {
   name: Sequelize.STRING,
   latitude: Sequelize.DECIMAL(9, 6),
   longitude: Sequelize.DECIMAL(9, 6),
-  statusItem: Sequelize.INTEGER
+  statusItem: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
+  },
 })
 
-const Country = sequelize.define('countries', {
-  name: {
-    type: Sequelize.STRING,
-    unique: true
-  },
+const Country = sequelize.define('countries', {  
+  name: Sequelize.STRING,
+  // name: {
+  //   type: Sequelize.STRING,
+  //   unique: true
+  // },
   latitude: Sequelize.DECIMAL(9, 6),
   longitude: Sequelize.DECIMAL(9, 6),
-  statusItem: Sequelize.INTEGER
+  statusItem: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
+  },
 })
 
 const Range = sequelize.define('ranges', {
@@ -27,26 +34,41 @@ const Range = sequelize.define('ranges', {
     unique: true
   },
   medal: Sequelize.STRING,
-  statusItem: Sequelize.INTEGER
+  statusItem: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
+  },
 })
 
 const Album = sequelize.define('albums', {
   description: Sequelize.STRING,
-  statusItem: Sequelize.INTEGER
+  statusItem: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
+  },
 })
 
 const Image = sequelize.define('images', {
   url: Sequelize.STRING,
-  statusItem: Sequelize.INTEGER
+  statusItem: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
+  },
 })
 
 const Like = sequelize.define('likes', {
-  statusItem: Sequelize.INTEGER
+  statusItem: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
+  },
 })
 
 const Comment = sequelize.define('comments', {
   text: Sequelize.STRING,
-  statusItem: Sequelize.INTEGER
+  statusItem: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
+  },
 })
 
 const User = sequelize.define('users', {
@@ -61,7 +83,10 @@ const User = sequelize.define('users', {
     unique: true
   }, 
   password: Sequelize.STRING,
-  statusItem: Sequelize.INTEGER
+  statusItem: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
+  },
 })
 
 const UserInfo = sequelize.define('userinfo', {
@@ -74,7 +99,10 @@ const UserInfo = sequelize.define('userinfo', {
 
 const Follow = sequelize.define('follows', {
   idFollowing: Sequelize.INTEGER,
-  statusItem: Sequelize.INTEGER
+  statusItem: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
+  },
 })
 
 /*-----------CREATING RELATIONS----------- */
@@ -119,6 +147,7 @@ Follow.belongsTo(User)
 /*--GENERETE TABLES AND RELATIONS IF THESE DOESN'T EXIST--*/
 
 sequelize.sync(/*{force: true}*/)
+// sequelize.sync({force: true})
 .then( () => console.log('DATABASE READY TO WORK'))
 .catch( error => console.log('ERROR CONNECTING TO THE DATABASE: --->', error))
 
