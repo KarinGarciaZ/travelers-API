@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "nodemon app.js",
     "seeds": "node seeds/index.js"
   },
@@ -31,6 +31,7 @@
     "@babel/preset-env": "^7.5.4",
     "@babel/register": "^7.4.4",
     "Faker": "^0.7.2",
+    "jest": "^24.8.0",
     "nodemon": "^1.19.1"
   }
 }
