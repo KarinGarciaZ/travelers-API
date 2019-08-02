@@ -2,10 +2,13 @@ const express = require('express')
 const router = express.Router()
 const album = require('./album.model')
 
+const responseMW = require('../../middlewares/response')
+
 router
 
-.get('/allUserAlbums/:id', (req, res) => {
-  album.getAllPerUser(req.params.id, res)
+.get('/allUserAlbums/:id', async (req, res) => {
+  let resp = await album.getAllPerUser(req.params.id)
+  responseMW(null, res, resp, 200)
 })
 
 .get('/:id', (req, res) => {

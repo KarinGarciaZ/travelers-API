@@ -14,8 +14,10 @@ const sequelizeConnection = require('../../db_config/connection')
 
 const albumFunctions = {}
 
-albumFunctions.getAllPerUser = (id, res) => {
-  sequelizeConnection.transaction( t => {
+albumFunctions.getAllPerUserw = id => id
+
+albumFunctions.getAllPerUser = id => {
+  return sequelizeConnection.transaction( t => {
     return User.findOne({ 
       where: { id, statusItem: 0 },
       attributes: ['id', 'name', 'email', 'username'],      
@@ -63,8 +65,8 @@ albumFunctions.getAllPerUser = (id, res) => {
       ]
     })
   })
-  .then(resp => responseMW(null, res, resp, 200 ))
-  .catch(err => responseMW(err, res))  
+  .then(resp => resp)
+  .catch(err => err)  
 }
 
 albumFunctions.getOne = (id, res) => {
